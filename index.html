@@ -6,18 +6,18 @@
   <title>Grade 4 – Unit 2 | Embedded Systems & Microcontrollers</title>
   <style>
     :root{
-      --bg:#f6f3ea;
-      --bg2:#eef5f1;
+      --bg:#fff7e6;
+      --bg2:#eaf7ff;
       --card:#ffffff;
-      --card2:#f7f9fb;
-      --text:#1d2230;
-      --muted:#5b6475;
-      --accent:#1f9d8a;
-      --accent2:#2a6fdb;
-      --warn:#e2a63a;
-      --danger:#d84b4b;
-      --border:rgba(16,24,40,.12);
-      --shadow: 0 18px 36px rgba(16,24,40,.12);
+      --card2:#f2fbff;
+      --text:#1b2430;
+      --muted:#42556b;
+      --accent:#16a37c;
+      --accent2:#1f7ad9;
+      --warn:#f4a63a;
+      --danger:#e35353;
+      --border:rgba(27,36,48,.14);
+      --shadow: 0 18px 36px rgba(27,36,48,.10);
       --radius:18px;
       --font-display:"Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive;
       --font-body:"Comic Sans MS", "Chalkboard SE", "Comic Neue", "Trebuchet MS", sans-serif;
@@ -31,9 +31,9 @@
       font-weight:600;
       font-size:16px;
       background:
-        radial-gradient(1200px 600px at 15% 0%, rgba(42,111,219,.12), transparent 60%),
-        radial-gradient(900px 500px at 90% 5%, rgba(31,157,138,.12), transparent 55%),
-        radial-gradient(900px 600px at 60% 90%, rgba(226,166,58,.10), transparent 60%),
+        radial-gradient(900px 500px at 10% 0%, rgba(31,122,217,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(22,163,124,.18), transparent 55%),
+        radial-gradient(900px 600px at 60% 90%, rgba(244,166,58,.15), transparent 60%),
         linear-gradient(180deg, var(--bg2), var(--bg));
       min-height:100vh;
     }
@@ -42,7 +42,7 @@
       position:static;
       z-index:20;
       backdrop-filter: blur(10px);
-      background: rgba(246,243,234,.88);
+      background: rgba(255,247,230,.88);
       border-bottom:1px solid var(--border);
     }
 
@@ -210,30 +210,8 @@
       background: linear-gradient(180deg, rgba(31,157,138,.08), transparent);
     }
 
-    .panelHeaderTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
     .panelHeader h2{margin:0;font-size:clamp(20px, 2.8vw, 26px);font-family: var(--font-display);font-weight:800}
     .panelHeader p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.5;font-weight:600}
-
-    .audioBtn{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 12px;
-      font-size:13px;
-      font-weight:800;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.9);
-      cursor:pointer;
-    }
-    .audioBtn:hover{background: rgba(255,255,255,1)}
 
     .content{padding:clamp(16px, 2.5vw, 22px)}
 
@@ -391,13 +369,14 @@
     .flashCard{
       border:1px solid var(--border);
       border-radius: 18px;
-      background: var(--card);
-      padding:16px;
+      background: linear-gradient(135deg, rgba(31,122,217,.10), rgba(22,163,124,.10));
+      padding:18px;
       min-height: 140px;
       cursor:pointer;
       user-select:none;
       perspective: 900px;
       position:relative;
+      box-shadow: var(--shadow);
     }
 
     .flashInner{
@@ -406,6 +385,9 @@
       transform-style: preserve-3d;
       transition: transform .45s ease;
       min-height: 120px;
+      background: #fff;
+      border-radius: 14px;
+      padding:14px;
     }
 
     .flashCard.flipped .flashInner{
@@ -428,8 +410,8 @@
     .flashTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .flashTop .count{color:var(--muted);font-size:12px}
 
-    .flashQ{font-size:17px;font-weight:800}
-    .flashA{color:var(--muted);font-size:14px;line-height:1.55;font-weight:600}
+    .flashQ{font-size:18px;font-weight:800}
+    .flashA{color:var(--muted);font-size:15px;line-height:1.55;font-weight:600}
 
     .flashActions{display:flex;gap:10px;flex-wrap:wrap}
 
@@ -633,10 +615,7 @@
 
         <section class="panel" id="panel">
           <div class="panelHeader">
-            <div class="panelHeaderTop">
-              <h2 id="panelTitle">Overview</h2>
-              <button class="audioBtn" id="speakBtn" aria-label="Read this topic out loud">🔊 Listen</button>
-            </div>
+            <h2 id="panelTitle">Overview</h2>
             <p id="panelDesc">Use the left menu. Read the notes, then try flashcards and the quiz.</p>
           </div>
           <div class="content">
@@ -1229,9 +1208,6 @@
     const panelTitle = document.getElementById('panelTitle');
     const panelDesc = document.getElementById('panelDesc');
     const progressPill = document.getElementById('progressPill');
-    const speakBtn = document.getElementById('speakBtn');
-    const synth = window.speechSynthesis;
-    let speaking = false;
     const textToggle = document.getElementById('textToggle');
 
     function applyTextSize(enabled){
@@ -1276,41 +1252,6 @@
       navList.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.target === target));
     }
 
-    function getVisibleTopicText(){
-      const current = pages.find(p => !p.classList.contains('hide'));
-      if(!current) return '';
-      const clone = current.cloneNode(true);
-      clone.querySelectorAll('button, input, .flashActions, .quiz, .result').forEach(el => el.remove());
-      return `${panelTitle.textContent}. ${panelDesc.textContent}. ${clone.textContent.replace(/\s+/g,' ').trim()}`;
-    }
-
-    function toggleSpeak(){
-      if(!synth) return;
-      if(speaking){
-        synth.cancel();
-        speaking = false;
-        speakBtn.textContent = '🔊 Listen';
-        return;
-      }
-      const text = getVisibleTopicText();
-      if(!text) return;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.rate = 0.95;
-      utter.onend = () => {
-        speaking = false;
-        speakBtn.textContent = '🔊 Listen';
-      };
-      utter.onerror = () => {
-        speaking = false;
-        speakBtn.textContent = '🔊 Listen';
-      };
-      synth.cancel();
-      speaking = true;
-      speakBtn.textContent = '⏹ Stop';
-      synth.speak(utter);
-    }
-
-    if(speakBtn) speakBtn.addEventListener('click', toggleSpeak);
     if(textToggle) textToggle.addEventListener('click', () => {
       const enabled = !document.body.classList.contains('large-text');
       applyTextSize(enabled);
@@ -1320,11 +1261,6 @@
       const btn = e.target.closest('button[data-target]');
       if(!btn) return;
       show(btn.dataset.target);
-      if(speaking){
-        synth.cancel();
-        speaking = false;
-        if(speakBtn) speakBtn.textContent = '🔊 Listen';
-      }
       window.scrollTo({top:0, behavior:'smooth'});
     });
 
