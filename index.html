@@ -576,6 +576,37 @@
     }
 
     .hide{display:none !important}
+
+    .screen-only{display:block}
+    .print-only{display:none}
+
+    @media print{
+      @page{size:A4;margin:12mm}
+      body{background:#fff;color:#000}
+      header{background:#fff;border-bottom:1px solid #ccc}
+      nav,.screen-only,.flashActions,.controls{display:none !important}
+      .print-only{display:block}
+      .wrap{max-width:none;padding:0}
+      .grid{grid-template-columns: 1fr}
+      .panel,.card,details,.flashCard,.quiz-card,table.compare,.example-card,.mini-card{
+        box-shadow:none;
+      }
+      .page{display:block !important;break-before: page;page-break-before: always}
+      .page:first-of-type{break-before:auto;page-break-before:auto}
+      .hide{display:block !important}
+      .page::before{
+        content: attr(data-title);
+        display:block;
+        font-family: var(--font-display);
+        font-size:22px;
+        font-weight:800;
+        margin:0 0 10px;
+      }
+      .card,details,.flashCard,.quiz-card,.example-card,.mini-card,table.compare{
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body>
@@ -589,7 +620,7 @@
             <p>Study notes • flashcards • mini quiz</p>
           </div>
         </div>
-        <div class="controls">
+        <div class="controls screen-only">
           <button class="btn toggle" id="textToggle" aria-pressed="false" title="Toggle large text">Aa Large Text</button>
           <button class="btn" id="printBtn" title="Print this page">🖨️ Print</button>
         </div>
@@ -625,7 +656,7 @@
           <div class="content">
 
             <!-- OVERVIEW -->
-            <div class="page" id="overview">
+            <div class="page" id="overview" data-title="Overview">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -671,7 +702,7 @@
             </div>
 
             <!-- EMBEDDED SYSTEMS -->
-            <div class="page hide" id="embedded">
+            <div class="page hide" id="embedded" data-title="Embedded Systems">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -825,7 +856,7 @@
             </div>
 
             <!-- IPO -->
-            <div class="page hide" id="ipo">
+            <div class="page hide" id="ipo" data-title="Input → Process → Output">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -943,7 +974,7 @@
             </div>
 
             <!-- MICROCONTROLLERS -->
-            <div class="page hide" id="micro">
+            <div class="page hide" id="micro" data-title="Microcontrollers">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -1048,7 +1079,7 @@
             </div>
 
             <!-- PROGRAMMING -->
-            <div class="page hide" id="programming">
+            <div class="page hide" id="programming" data-title="Programming">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -1078,7 +1109,7 @@
             </div>
 
             <!-- VARIABLES -->
-            <div class="page hide" id="variables">
+            <div class="page hide" id="variables" data-title="Variables">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -1141,7 +1172,7 @@
             </div>
 
             <!-- HARDWARE -->
-            <div class="page hide" id="hardware">
+            <div class="page hide" id="hardware" data-title="NeoPixels & Pin Pads">
               <div class="cards">
                 <div class="card">
                   <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
@@ -1172,7 +1203,7 @@
             </div>
 
             <!-- PRACTICE -->
-            <div class="page hide" id="practice">
+            <div class="page hide" id="practice" data-title="Practice Quiz">
               <div class="quiz" id="quiz">
                 <svg class="topic-illu" viewBox="0 0 220 140" aria-hidden="true">
                   <rect x="20" y="24" width="160" height="92" rx="12" class="paper"></rect>
@@ -1188,7 +1219,7 @@
 
                 <div class="progress" aria-hidden="true"><span id="quizProgress"></span></div>
 
-                <div class="quiz-card" id="quizCard">
+                <div class="quiz-card screen-only" id="quizCard">
                   <div class="quiz-meta">
                     <span id="quizCount">Question 1 / 10</span>
                     <span id="quizScore">Score: 0</span>
@@ -1198,7 +1229,23 @@
                   <div class="result" id="result"></div>
                 </div>
 
-                <div class="revise" id="reviseBox"></div>
+                <div class="revise screen-only" id="reviseBox"></div>
+
+                <div class="print-only">
+                  <h4>Quiz Questions + Answers</h4>
+                  <div class="card">
+                    <p><b>1)</b> An embedded system is… <br><b>Answer:</b> a small computer inside a machine</p>
+                    <p><b>2)</b> Which one is an INPUT? <br><b>Answer:</b> button</p>
+                    <p><b>3)</b> Light and sound are… <br><b>Answer:</b> outputs</p>
+                    <p><b>4)</b> The “brain” inside the system is the… <br><b>Answer:</b> microcontroller</p>
+                    <p><b>5)</b> NeoPixels are an example of… <br><b>Answer:</b> output</p>
+                    <p><b>6)</b> A variable is… <br><b>Answer:</b> a named box that stores data</p>
+                    <p><b>7)</b> Input → Process → Output means… <br><b>Answer:</b> something goes in, the system decides, then something happens</p>
+                    <p><b>8)</b> Pin pads are used for… <br><b>Answer:</b> input and output</p>
+                    <p><b>9)</b> A microcontroller is… <br><b>Answer:</b> small</p>
+                    <p><b>10)</b> A washing machine is an… <br><b>Answer:</b> embedded system</p>
+                  </div>
+                </div>
               </div>
 
               <div class="footer">
