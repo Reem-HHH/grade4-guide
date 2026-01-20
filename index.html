@@ -58,12 +58,15 @@
 
     .brand{
       display:flex;
+      flex-direction:column;
       align-items:center;
-      gap:12px;
+      gap:10px;
+      text-align:center;
+      width:100%;
     }
 
     .logo{
-      width:90px;height:90px;border-radius:16px;
+      width:160px;height:160px;border-radius:20px;
       background: transparent;
       display:grid;place-items:center;
     }
@@ -80,13 +83,13 @@
 
     .brand h1{
       margin:0;
-      font-size:clamp(15px, 1.8vw, 20px);
+      font-size:clamp(14px, 1.6vw, 18px);
       line-height:1.2;
       letter-spacing:.2px;
       font-family: var(--font-display);
       font-weight:700;
     }
-    .brand p{margin:0;color:var(--muted);font-size:12px;font-weight:600}
+    .brand p{margin:0;color:var(--muted);font-size:11px;font-weight:600}
 
     .controls{
       display:flex;gap:10px;align-items:center;flex-wrap:wrap;
@@ -184,9 +187,10 @@
       font-size:14px;
       font-weight:700;
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:flex-start;
+      gap:4px;
     }
 
     .navList button:hover{background: rgba(31,157,138,.06)}
@@ -195,7 +199,8 @@
       border-color: rgba(31,122,217,.35);
     }
 
-    .navList small{color:var(--muted)}
+    .navList span{line-height:1.2}
+    .navList small{color:var(--muted);line-height:1.2}
 
     .panel{
       border:1px solid var(--border);
@@ -376,40 +381,11 @@
         #fff;
       padding:20px;
       min-height: 160px;
-      cursor:pointer;
       user-select:none;
-      perspective: 900px;
       position:relative;
       box-shadow: 0 14px 30px rgba(31,122,217,.18);
-    }
-
-    .flashInner{
       display:grid;
       gap:10px;
-      transform-style: preserve-3d;
-      transition: transform .45s ease;
-      min-height: 120px;
-      background: #ffffff;
-      border-radius: 16px;
-      padding:16px;
-      border:2px solid rgba(22,163,124,.22);
-    }
-
-    .flashCard.flipped .flashInner{
-      transform: rotateY(180deg);
-    }
-
-    .flashFace{
-      backface-visibility: hidden;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .flashBack{
-      transform: rotateY(180deg);
-      position:absolute;
-      inset:16px;
     }
 
     .flashTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -417,6 +393,33 @@
 
     .flashQ{font-size:19px;font-weight:900}
     .flashA{color:var(--muted);font-size:15px;line-height:1.55;font-weight:700}
+
+    .qaDivider{
+      height:2px;
+      background: rgba(31,122,217,.18);
+      border-radius:999px;
+    }
+
+    table.compare{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 8px 18px rgba(27,36,48,.08);
+    }
+    table.compare th,
+    table.compare td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      vertical-align:top;
+    }
+    table.compare th{
+      background: rgba(31,122,217,.10);
+      font-weight:800;
+    }
 
     .flashActions{display:flex;gap:10px;flex-wrap:wrap}
 
@@ -777,7 +780,7 @@
                     </div>
                   </div>
                 </details>
-                <details>
+                <details open>
                   <summary>Why it is important</summary>
                   <div class="detailBody">
                     Embedded systems do specific tasks, are reliable, small in size, use less power, make machines smarter, and improve product quality.
@@ -787,18 +790,11 @@
 
               <div class="flashWrap">
                 <h3 style="margin:0">Flashcards</h3>
-                <div class="flashCard" id="flash1" role="button" aria-label="Flashcard. Tap to flip." tabindex="0">
-                  <div class="flashInner">
-                    <div class="flashFace">
-                      <div class="flashTop"><span class="pill">Tap to flip</span><span class="count" id="flashCount">1 / 6</span></div>
-                      <div class="flashQ" id="flashQ">What is an embedded system?</div>
-                      <p class="tiny">Think of the answer before you flip.</p>
-                    </div>
-                    <div class="flashFace flashBack">
-                      <div class="flashTop"><span class="pill">Answer</span><span class="count" id="flashCountBack">1 / 6</span></div>
-                      <div class="flashA" id="flashA">A small computer inside a bigger machine or device that does specific jobs.</div>
-                    </div>
-                  </div>
+                <div class="flashCard" id="flash1" aria-label="Flashcard">
+                  <div class="flashTop"><span class="pill">Question + Answer</span><span class="count" id="flashCount">1 / 6</span></div>
+                  <div class="flashQ" id="flashQ">What is an embedded system?</div>
+                  <div class="qaDivider"></div>
+                  <div class="flashA" id="flashA">A small computer inside a bigger machine or device that does specific jobs.</div>
                 </div>
                 <div class="flashActions">
                   <button class="btn" id="prevFlash" aria-label="Previous flashcard">
@@ -828,7 +824,7 @@
                     Shuffle
                   </button>
                 </div>
-                <p class="tiny">Tip: say the answer out loud before flipping. Swipe left/right for next/previous.</p>
+                <p class="tiny">Tip: say the answer out loud. Swipe left/right for next/previous.</p>
               </div>
             </div>
 
@@ -1029,12 +1025,27 @@
                     </div>
                   </div>
                 </details>
-                <details>
+                <details open>
                   <summary>Embedded system vs microcontroller</summary>
                   <div class="detailBody">
-                    <b>Embedded system:</b> the whole system inside a machine.<br>
-                    <b>Microcontroller:</b> the brain chip inside the system.<br>
-                    <b>Example:</b> Washing machine = embedded system, chip inside it = microcontroller.
+                    <table class="compare" aria-label="Embedded system vs microcontroller">
+                      <thead>
+                        <tr>
+                          <th>Embedded system</th>
+                          <th>Microcontroller</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>The whole system inside a machine.</td>
+                          <td>The brain chip inside the system.</td>
+                        </tr>
+                        <tr>
+                          <td>Example: washing machine.</td>
+                          <td>Example: the chip inside the washing machine.</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </details>
               </div>
@@ -1155,7 +1166,7 @@
               </div>
 
               <div class="accordion">
-                <details>
+                <details open>
                   <summary>Mini challenge</summary>
                   <div class="detailBody">
                     If you touch a pin pad (input), the microcontroller decides (process), then turns on a NeoPixel (output).
@@ -1310,7 +1321,6 @@
     const flashQ = document.getElementById('flashQ');
     const flashA = document.getElementById('flashA');
     const flashCount = document.getElementById('flashCount');
-    const flashCountBack = document.getElementById('flashCountBack');
     let touchStartX = 0;
     let touchStartY = 0;
 
@@ -1319,23 +1329,9 @@
       flashQ.textContent = c.q;
       flashA.textContent = c.a;
       flashCount.textContent = `${flashIndex+1} / ${flashcards.length}`;
-      if(flashCountBack) flashCountBack.textContent = `${flashIndex+1} / ${flashcards.length}`;
-      if(flashEl) flashEl.classList.remove('flipped');
+      if(flashEl) flashEl.scrollTop = 0;
     }
     if(flashEl) renderFlash();
-
-    function flipFlash(){
-      if(!flashEl) return;
-      flashEl.classList.toggle('flipped');
-    }
-
-    if(flashEl) flashEl.addEventListener('click', flipFlash);
-    if(flashEl) flashEl.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        flipFlash();
-      }
-    });
     if(flashEl) flashEl.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
