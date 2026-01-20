@@ -110,17 +110,18 @@
     }
 
     .btn{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.75);
+      border:2px solid rgba(31,122,217,.25);
+      background: linear-gradient(135deg, rgba(31,122,217,.12), rgba(22,163,124,.12));
       color:var(--text);
       border-radius: 999px;
-      padding:8px 10px;
+      padding:10px 14px;
       font-size:13px;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
-      transition: transform .08s ease, background .2s ease;
+      transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 14px rgba(31,122,217,.12);
     }
-    .btn:hover{background: rgba(255,255,255,.95)}
+    .btn:hover{background: linear-gradient(135deg, rgba(31,122,217,.18), rgba(22,163,124,.18))}
     .btn:active{transform: translateY(1px)}
 
     .btn.toggle{
@@ -190,8 +191,8 @@
 
     .navList button:hover{background: rgba(31,157,138,.06)}
     .navList button.active{
-      background: rgba(31,157,138,.12);
-      border-color: rgba(31,157,138,.35);
+      background: linear-gradient(90deg, rgba(31,122,217,.18), rgba(22,163,124,.18));
+      border-color: rgba(31,122,217,.35);
     }
 
     .navList small{color:var(--muted)}
@@ -207,7 +208,7 @@
     .panelHeader{
       padding:clamp(16px, 2.5vw, 22px) clamp(16px, 2.5vw, 22px) 14px;
       border-bottom:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(31,157,138,.08), transparent);
+      background: linear-gradient(180deg, rgba(31,122,217,.12), rgba(22,163,124,.08), transparent);
     }
 
     .panelHeader h2{margin:0;font-size:clamp(20px, 2.8vw, 26px);font-family: var(--font-display);font-weight:800}
@@ -367,16 +368,19 @@
     .flashWrap{margin-top:14px;display:grid;gap:12px}
 
     .flashCard{
-      border:1px solid var(--border);
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(31,122,217,.10), rgba(22,163,124,.10));
-      padding:18px;
-      min-height: 140px;
+      border:3px dashed rgba(31,122,217,.35);
+      border-radius: 22px;
+      background:
+        radial-gradient(120px 80px at 20% 0%, rgba(244,166,58,.25), transparent 70%),
+        radial-gradient(160px 100px at 90% 10%, rgba(31,122,217,.20), transparent 70%),
+        #fff;
+      padding:20px;
+      min-height: 160px;
       cursor:pointer;
       user-select:none;
       perspective: 900px;
       position:relative;
-      box-shadow: var(--shadow);
+      box-shadow: 0 14px 30px rgba(31,122,217,.18);
     }
 
     .flashInner{
@@ -385,9 +389,10 @@
       transform-style: preserve-3d;
       transition: transform .45s ease;
       min-height: 120px;
-      background: #fff;
-      border-radius: 14px;
-      padding:14px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding:16px;
+      border:2px solid rgba(22,163,124,.22);
     }
 
     .flashCard.flipped .flashInner{
@@ -410,8 +415,8 @@
     .flashTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .flashTop .count{color:var(--muted);font-size:12px}
 
-    .flashQ{font-size:18px;font-weight:800}
-    .flashA{color:var(--muted);font-size:15px;line-height:1.55;font-weight:600}
+    .flashQ{font-size:19px;font-weight:900}
+    .flashA{color:var(--muted);font-size:15px;line-height:1.55;font-weight:700}
 
     .flashActions{display:flex;gap:10px;flex-wrap:wrap}
 
